@@ -44,6 +44,30 @@ Each script sends one MIP-16 call per page and pages with `cursorBlock`, the las
 - `eth_query*` calls can't be batched yet, so each one goes as its own request.
 - The free tier is rate limited. `lib/rpc.mjs` waits and retries on HTTP 429.
 
+## Build with an AI agent
+
+Open this repo in a coding agent such as Claude Code or Cursor. `AGENTS.md` gives it the endpoint, the methods and the rules it needs.
+
+To give the agent Envio's docs as well, add the Envio docs MCP server:
+
+```bash
+claude mcp add --transport http envio-docs https://docs.envio.dev/mcp
+```
+
+Then try a prompt like one of these:
+
+```text
+Add a script that lists every WMON deposit() call on Monad in the last 10,000 blocks, with the sender and block timestamp.
+```
+
+```text
+Add a script that prints the 10 wallets that received the most USDC on Monad in the last 2,000 blocks.
+```
+
+```text
+Add a script that exports a wallet's full transaction history on Monad, sent and received, to CSV.
+```
+
 ## Endpoint
 
 | Network | Endpoint |
