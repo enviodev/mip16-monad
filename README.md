@@ -1,6 +1,6 @@
-# MIP-16 on Monad - Node.js Example
+# MIP-16 on Monad with Envio HyperRPC
 
-Runnable examples of the [MIP-16](https://github.com/monad-crypto/MIPs/pull/89) query methods on Monad mainnet, served by [Envio HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc). No dependencies, just Node.js.
+The official Envio scripts for the [MIP-16](https://github.com/monad-crypto/MIPs/pull/89) query methods on Monad mainnet, served by [Envio HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc). They run on Node.js with no dependencies.
 
 MIP-16 adds RPC methods that filter on the server, return only the fields you select, and join each result to its transaction and block. These scripts show the three things that are hard with standard RPC.
 
@@ -9,8 +9,6 @@ MIP-16 adds RPC methods that filter on the server, return only the fields you se
 | `wallet-history.mjs` | Every transaction a wallet sent, from the first block | `eth_queryTransactions` |
 | `function-calls.mjs` | The most recent calls to one function on a contract | `eth_queryTransactions` |
 | `transfers-with-context.mjs` | Every USDC transfer in a block range, with sender and timestamp | `eth_queryLogs` |
-
-> This is an educational example. It is not audited and not production-ready.
 
 ## Quick start
 

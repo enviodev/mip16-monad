@@ -1,5 +1,5 @@
 {
-  "name": "mip16-monad-example",
+  "name": "mip16-monad",
   "version": "1.0.0",
   "description": "Query Monad history with MIP-16 query methods on Envio HyperRPC",
   "type": "module",
