@@ -1,0 +1,13 @@
+{
+  "name": "mip16-monad-example",
+  "version": "1.0.0",
+  "description": "Query Monad history with MIP-16 query methods on Envio HyperRPC",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=20.6" },
+  "scripts": {
+    "transfers": "node --env-file=.env transfers-with-context.mjs",
+    "calls": "node --env-file=.env function-calls.mjs",
+    "wallet": "node --env-file=.env wallet-history.mjs"
+  }
+}
