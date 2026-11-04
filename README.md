@@ -57,7 +57,7 @@ claude mcp add --transport http envio-docs https://docs.envio.dev/mcp
 Then try a prompt like one of these:
 
 ```text
-Add a script that lists every WMON deposit() call on Monad in the last 10,000 blocks, with the sender and block timestamp.
+Add a script that lists every direct call to WMON deposit() on Monad in the last 10,000 blocks, with the sender and block timestamp.
 ```
 
 ```text
