@@ -5,25 +5,29 @@ import { rpc, hex } from "./lib/rpc.mjs";
 const wallet = process.argv[2];
 if (!wallet) throw new Error("Usage: node wallet-history.mjs <address>");
 
-const toBlock = BigInt(await rpc("eth_blockNumber", []));
-let fromBlock = 0n;
+let fromBlock = "earliest";
+let toBlock = "latest";
 const txs = [];
 const timestamps = new Map();
 
-while (fromBlock <= toBlock) {
+while (true) {
   const page = await rpc("eth_queryTransactions", [{
     filter: { from: wallet },
     fields: {
       transactions: ["hash", "to", "value", "blockNumber"],
       blocks: ["number", "timestamp"],
     },
-    fromBlock: hex(fromBlock),
-    toBlock: hex(toBlock),
+    fromBlock,
+    toBlock,
   }]);
   txs.push(...page.data.transactions);
   for (const b of page.data.blocks ?? []) timestamps.set(b.number, Number(b.timestamp));
+  // Keep the same end block for every page, and stop once a page reaches it.
+  toBlock = page.toBlock.number;
+  const cursor = BigInt(page.cursorBlock.number);
+  if (cursor >= BigInt(toBlock)) break;
   // Each page ends at cursorBlock. The next page starts one block later.
-  fromBlock = BigInt(page.cursorBlock.number) + 1n;
+  fromBlock = hex(cursor + 1n);
 }
 
 console.log(`${txs.length} transactions sent by ${wallet}`);

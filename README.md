@@ -1,6 +1,6 @@
 # MIP-16 on Monad with Envio HyperRPC
 
-The official Envio scripts for the [MIP-16](https://github.com/monad-crypto/MIPs/pull/89) query methods on Monad mainnet, served by [Envio HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc). They run on Node.js with no dependencies.
+The official Envio scripts for the [MIP-16](https://github.com/monad-crypto/MIPs/pull/89) query methods on Monad, served by [Envio HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc). They run on Node.js with no dependencies.
 
 MIP-16 adds RPC methods that filter on the server, return only the fields you select, and join each result to its transaction and block. These scripts show the three things that are hard with standard RPC.
 
@@ -25,7 +25,7 @@ cp .env.example .env
 Node.js 20.6 or later is required.
 
 ```bash
-# Every USDC transfer in the last 2,000 blocks, with sender and timestamp
+# Every USDC transfer in the latest 2,000 blocks, newest first, with sender and timestamp
 npm run transfers -- 2000
 
 # The 20 most recent gasless USDC transfers (transferWithAuthorization)
@@ -40,8 +40,8 @@ npm run wallet -- <address>
 Each script sends one MIP-16 call per page and pages with `cursorBlock`, the last block a page covers.
 
 - Oldest first, the next page starts at `cursorBlock + 1`.
-- Newest first, the next page starts at `cursorBlock - 1`. A newest-first page covers a limited window of blocks, so it can come back empty when matches are sparse.
-- `eth_query*` calls can't be batched yet, so each one goes as its own request.
+- Newest first, the next page starts at `cursorBlock - 1`. A page can return fewer results than `target`, or none, so keep paging from `cursorBlock`.
+- Near the chain tip, compare each page's `fromBlock.parentHash` with the previous page's `cursorBlock.hash` to detect a reorg.
 - The free tier is rate limited. `lib/rpc.mjs` waits and retries on HTTP 429.
 
 ## Build with an AI agent
@@ -73,9 +73,11 @@ Add a script that exports a wallet's full transaction history on Monad, sent and
 | Network | Endpoint |
 | - | - |
 | Mainnet | `https://monad.rpc.hypersync.xyz/<api-token>` |
+| Testnet | `https://10143.rpc.hypersync.xyz/<api-token>` |
 
 ## Learn more
 
 - [MIP-16 spec](https://github.com/monad-crypto/MIPs/pull/89)
+- [MIP-16 on HyperRPC](https://envio.dev/products/hyperrpc)
 - [HyperRPC docs](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc)
 - [Envio on Monad](https://envio.dev/chains/monad)
